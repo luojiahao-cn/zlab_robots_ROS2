@@ -1,0 +1,10 @@
+# ROS 2 build artifacts
+build/
+install/
+log/
+
+# Python virtual environments
+.venv/
+
+# VS Code workspace settings
+.vscode/
