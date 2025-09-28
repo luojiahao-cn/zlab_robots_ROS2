@@ -1,0 +1,49 @@
+# 全局机械臂与网络/硬件配置
+# 可以在不同部署环境中复制或使用环境变量指向覆盖文件
+
+arms:
+  arm1:
+    arm_id: zlab_arm_left # 对外显示/日志使用的逻辑 ID
+    prefix: l_ # 真实关节/连杆命名前缀（保持简短）
+    enabled: true # 是否实例化
+    base_xyz: [0.0, 0.0, 0.0]
+    base_rpy: [0.0, 0.0, 0.0]
+    ip: 192.168.1.101 # 真实控制器/驱动盒 IP (占位)
+    protocol: modbus_tcp # 示例：modbus_tcp / ethercat / canopen
+    dof: 6
+  arm2:
+    arm_id: zlab_arm_right # 对外显示/日志使用的逻辑 ID
+    prefix: r_ # 真实关节/连杆命名前缀（保持简短）
+    enabled: false # 默认关闭；需要双臂时在 launch 参数启用或修改此文件
+    base_xyz: [0.8, 0.0, 0.0]
+    base_rpy: [0.0, 0.0, 0.0]
+    ip: 192.168.1.102
+    protocol: modbus_tcp
+    dof: 6
+
+# 双臂协作配置（如果启用 right.enabled）
+coordinated:
+  enable_dual_planning: true # 是否在 MoveIt 中使用 dual_arm 组
+  default_planning_group: left_arm # 可为 left_arm / right_arm / dual_arm
+  sync_tolerance:
+    position: 0.005
+    velocity: 0.01
+
+# 通用安全参数
+safety:
+  joint_soft_limits_scale: 0.95
+  collision_check_rate: 50
+  max_plan_attempts: 10
+
+# 硬件通信超时 (秒)
+communication:
+  connect_timeout: 3.0
+  command_timeout: 1.0
+  retry: 2
+
+# 可扩展的真实控制映射 (示例)
+controllers:
+  arm1:
+    trajectory_controller: left_arm_controller
+  arm2:
+    trajectory_controller: right_arm_controller
