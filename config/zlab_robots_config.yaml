@@ -1,0 +1,107 @@
+# 全局机械臂与网络/硬件配置
+# 可以在不同部署环境中复制或使用环境变量指向覆盖文件
+
+arms:
+  arm1:
+    arm_id: zlab_arm_left # 对外显示/日志使用的逻辑 ID
+    prefix: l_ # 真实关节/连杆命名前缀（保持简短）
+    enabled: true # 是否实例化
+    base_xyz: [0.0, 0.0, 0.0]
+    base_rpy: [0.0, 0.0, 0.0]
+    ip: 192.168.1.101 # 真实控制器/驱动盒 IP (占位)
+    protocol: modbus_tcp # 示例：modbus_tcp / ethercat / canopen
+    dof: 6
+    # --- MoveIt 扩展 (每个机械臂) ---
+    moveit:
+      planning_group: left_arm        # 规划组名称 (将在 SRDF 中生成)
+      end_effector_link: l_j6_link    # 末端执行器 link 名称 (URDF: <prefix>j6_link)
+      base_link: l_base0_link         # 基座 link (URDF: <prefix>base0_link)
+      ik_solver: kdl                  # 可选: kdl / trac_ik / ikfast (后续可扩展)
+      default_planners: [RRTConnectkConfigDefault]
+      # 可选自定义关节顺序（为空则按 prefix + j{n} 生成）
+      joint_order: []
+      tool0_frame: l_tool0            # 若有法兰/工具虚拟链接
+      payload_kg: 1.5
+  arm2:
+    arm_id: zlab_arm_right # 对外显示/日志使用的逻辑 ID
+    prefix: r_ # 真实关节/连杆命名前缀（保持简短）
+    enabled: true # 默认关闭；需要双臂时在 launch 参数启用或修改此文件
+    base_xyz: [0.0, 0.8, 0.0]
+    base_rpy: [0.0, 0.0, 0.0]
+    ip: 192.168.1.102
+    protocol: modbus_tcp
+    dof: 6
+    moveit:
+      planning_group: right_arm
+      end_effector_link: r_j6_link
+      base_link: r_base0_link
+      ik_solver: kdl
+      default_planners: [RRTConnectkConfigDefault]
+      joint_order: []
+      tool0_frame: r_tool0
+      payload_kg: 1.5
+
+# 双臂协作配置（如果启用 right.enabled）
+coordinated:
+  enable_dual_planning: true # 是否在 MoveIt 中使用 dual_arm 组
+  combined_group_name: dual_arms # 组合组名称 (SRDF 中自动生成)
+  default_planning_group: left_arm # 可为 left_arm / right_arm / dual_arms
+  sync_tolerance:
+    position: 0.005
+    velocity: 0.01
+  # 双臂特定策略
+  planning:
+    allow_asymmetric: true
+    balance_payload: false
+
+# 通用安全参数
+safety:
+  joint_soft_limits_scale: 0.95
+  collision_check_rate: 50
+  max_plan_attempts: 10
+  # 可选: MoveIt Planning Scene 更新频率
+  scene_monitor_hz: 30
+
+# 硬件通信超时 (秒)
+communication:
+  connect_timeout: 3.0
+  command_timeout: 1.0
+  retry: 2
+
+# 可扩展的真实控制映射 (示例)
+controllers:
+  arm1:
+    trajectory_controller: left_arm_controller
+  arm2:
+    trajectory_controller: right_arm_controller
+
+# MoveIt 规划器/求解全局默认配置
+moveit_global:
+  planning_pipeline: ompl
+  request_adapters:
+    - default_planner_request_adapters/AddTimeOptimalParameterization
+    - default_planner_request_adapters/FixWorkspaceBounds
+    - default_planner_request_adapters/FixStartStateBounds
+    - default_planner_request_adapters/FixStartStateCollision
+    - default_planner_request_adapters/FixStartStatePathConstraints
+  start_state_max_bounds_error: 0.1
+  planning_attempts: 1
+  planning_time: 5.0
+  velocity_scaling: 0.8
+  acceleration_scaling: 0.6
+  # 参考世界坐标系 (planner frame)
+  planning_frame: world
+
+# 碰撞过滤/白名单（供 SRDF 生成脚本可选使用）
+collision_matrix:
+  allow_between_same_prefix: true  # 同一条臂相邻 link 碰撞豁免
+  additional_allow:
+    - [l_link_2, l_link_3]
+    - [r_link_2, r_link_3]
+  disabled_links: []
+
+# 关节自定义限制（可覆盖默认 joint_limits.yaml）
+custom_joint_limits: {}
+
+# 末端工具描述 (可将来生成额外 SRDF group 或虚拟 link)
+end_effectors: {}
