@@ -15,8 +15,7 @@ install(DIRECTORY launch/ DESTINATION share/${PROJECT_NAME}/launch/)
 
 # 安装配置文件（处理符号链接）
 install(DIRECTORY config/ DESTINATION share/${PROJECT_NAME}/config/ 
-        OPTIONAL
-        FOLLOW_SYMLINKS)
+  OPTIONAL)
 
 # 测试配置
 if(BUILD_TESTING)

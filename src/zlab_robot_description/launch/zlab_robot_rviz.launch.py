@@ -186,7 +186,8 @@ class ZlabRobotRvizLauncher:
         # 获取配置文件路径
         config_file = LaunchConfiguration("config_file").perform(context)
 
-        # 加载配置
+        # 加载配置，获取实际加载路径
+        resolved_path = str(Path(config_file).expanduser().resolve())
         config_data, is_valid = self.load_robot_config(config_file)
 
         # 解析机械臂配置
@@ -195,11 +196,11 @@ class ZlabRobotRvizLauncher:
         if enabled_arms:
             actions.append(
                 LogInfo(
-                    msg=f"启用的机械臂: {', '.join(enabled_arms)} (配置: {config_file})"
+                    msg=f"启用的机械臂: {', '.join(enabled_arms)} (配置: {resolved_path})"
                 )
             )
         else:
-            actions.append(LogInfo(msg=f"配置文件中没有启用的机械臂: {config_file}"))
+            actions.append(LogInfo(msg=f"配置文件中没有启用的机械臂: {resolved_path}"))
 
         # 创建节点
         nodes = self.create_nodes(context, joint_names, config_file)
