@@ -8,36 +8,17 @@ endif()
 # 查找依赖包
 find_package(ament_cmake REQUIRED)
 
-# 安装 URDF、网格和配置文件
-install(DIRECTORY
-  urdf/
-  DESTINATION share/${PROJECT_NAME}/urdf/
-)
+# 安装资源文件
+install(DIRECTORY urdf/ DESTINATION share/${PROJECT_NAME}/urdf/)
+install(DIRECTORY meshes/ DESTINATION share/${PROJECT_NAME}/meshes/ OPTIONAL)
+install(DIRECTORY launch/ DESTINATION share/${PROJECT_NAME}/launch/)
 
-install(DIRECTORY
-  meshes/
-  DESTINATION share/${PROJECT_NAME}/meshes/
-  OPTIONAL
-)
+# 安装配置文件（处理符号链接）
+install(DIRECTORY config/ DESTINATION share/${PROJECT_NAME}/config/ 
+        OPTIONAL
+        FOLLOW_SYMLINKS)
 
-install(DIRECTORY
-  launch/
-  DESTINATION share/${PROJECT_NAME}/launch/
-)
-
-install(DIRECTORY
-  config/
-  DESTINATION share/${PROJECT_NAME}/config/
-  OPTIONAL
-)
-
-install(DIRECTORY
-  rviz/
-  DESTINATION share/${PROJECT_NAME}/rviz/
-  OPTIONAL
-)
-
-# 测试
+# 测试配置
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   ament_lint_auto_find_test_dependencies()

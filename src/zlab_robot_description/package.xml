@@ -16,6 +16,7 @@
   <depend>robot_state_publisher</depend>
   <depend>joint_state_publisher</depend>
   <depend>joint_state_publisher_gui</depend>
+  <depend>python3-yaml</depend>
   
   <!-- Launch 相关 -->
   <depend>launch</depend>
