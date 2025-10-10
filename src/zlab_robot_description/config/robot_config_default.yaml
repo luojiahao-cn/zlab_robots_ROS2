@@ -3,25 +3,24 @@
 # 机械臂配置
 arms:
   arm1:
-    arm_id: zlab_arm_left
-    prefix: l_
+    arm_id: zlab_arm
+    prefix: ""
     enabled: true
     dof: 6
     base_xyz: [0.0, 0.0, 0.0]
     base_rpy: [0.0, 0.0, 0.0]
-    # 物理属性
-    payload_kg: 1.5
-    reach_m: 0.8
-    
+    payload_kg: 5  
+
+
   arm2:
     arm_id: zlab_arm_right
     prefix: r_
-    enabled: true
+    enabled: false
     dof: 6
     base_xyz: [0.0, 0.8, 0.0]
     base_rpy: [0.0, 0.0, 0.0]
-    payload_kg: 1.5
-    reach_m: 0.8
+    payload_kg: 5
+
 
 # 关节限制配置
 joint_limits:

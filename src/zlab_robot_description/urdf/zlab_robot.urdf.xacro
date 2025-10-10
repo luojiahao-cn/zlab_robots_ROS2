@@ -333,16 +333,7 @@
         </joint>
         <xacro:gazebo-joint joint="${name_prefix}j6" />
 
-        <!-- End effector link for proper tool positioning -->
-        <link name="${name_prefix}end_effector">
-            <!-- Empty link for end effector reference frame -->
-        </link>
 
-        <joint name="${name_prefix}end_effector_joint" type="fixed">
-            <origin xyz="0 0 0.07" rpy="0 0 0" />
-            <parent link="${name_prefix}j6_link" />
-            <child link="${name_prefix}end_effector" />
-        </joint>
 
     </xacro:macro>
 

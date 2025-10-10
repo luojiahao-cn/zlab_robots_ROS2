@@ -54,7 +54,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 # 确保我们在正确的工作目录
-cd /home/lawkaho/workshop/zlab_robots_ROS2
+cd "$(dirname "$0")/../../.."
 
 # 根据预设设置配置文件和输出文件
 if [ ! -z "$PRESET" ]; then

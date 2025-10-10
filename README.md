@@ -18,8 +18,8 @@ cd zlab_robots_ROS2
 # 安装依赖（可选，如果添加了新的依赖）
 rosdep install --from-paths src --ignore-src -r -y
 
-# 构建（忽略 build/install/log 将由 .gitignore 处理）
-colcon build --symlink-install
+# 构建
+colcon build
 
 # 加载工作空间环境
 source install/setup.bash
