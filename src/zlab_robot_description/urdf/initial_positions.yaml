@@ -1,0 +1,23 @@
+initial_positions:
+  zlab_arm_j1: 0.0
+  zlab_arm_j2: 0.0
+  zlab_arm_j3: 0.0
+  zlab_arm_j4: 0.0
+  zlab_arm_j5: 0.0
+  zlab_arm_j6: 0.0
+  
+  # 双臂模式时的初始位置 - 左臂
+  l_j1: 0.0
+  l_j2: 0.0
+  l_j3: 0.0
+  l_j4: 0.0
+  l_j5: 0.0
+  l_j6: 0.0
+  
+  # 双臂模式时的初始位置 - 右臂
+  r_j1: 0.0
+  r_j2: 0.0
+  r_j3: 0.0
+  r_j4: 0.0
+  r_j5: 0.0
+  r_j6: 0.0

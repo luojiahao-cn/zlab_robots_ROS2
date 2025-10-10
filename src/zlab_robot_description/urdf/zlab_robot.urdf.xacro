@@ -333,7 +333,22 @@
         </joint>
         <xacro:gazebo-joint joint="${name_prefix}j6" />
 
+        <!-- Tool0 link - 末端执行器参考点 -->
+        <link name="${name_prefix}tool0">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <mass value="0.001" />
+                <inertia ixx="0.000001" ixy="0" ixz="0"
+                    iyy="0.000001" iyz="0" izz="0.000001" />
+            </inertial>
+        </link>
 
+        <!-- Tool0 joint - 连接 j6_link 到 tool0 -->
+        <joint name="${name_prefix}j6_tool0" type="fixed">
+            <origin xyz="0 0 0.1" rpy="0 0 0" />
+            <parent link="${name_prefix}j6_link" />
+            <child link="${name_prefix}tool0" />
+        </joint>
 
     </xacro:macro>
 

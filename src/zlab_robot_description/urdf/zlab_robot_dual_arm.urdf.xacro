@@ -8,7 +8,16 @@
     <!-- 指定配置文件 -->
     <xacro:arg name="config_file" default="$(find zlab_robot_description)/config/robot_config_dual_arm.yaml" />
     
+    <!-- 初始位置文件 -->
+    <xacro:arg name="initial_positions_file" default="$(find zlab_robot_moveit_config)/config/dual_arm/initial_positions.yaml" />
+    
     <!-- 引入主 xacro 文件 -->
     <xacro:include filename="$(find zlab_robot_description)/urdf/zlab_robot.urdf.xacro" />
+    
+    <!-- 引入 ros2_control 配置 -->
+    <xacro:include filename="$(find zlab_robot_moveit_config)/config/dual_arm/zlab_robot_dual_arm.ros2_control.xacro" />
+    
+    <!-- 实例化 ros2_control -->
+    <xacro:zlab_robot_dual_arm_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/>
     
 </robot>
