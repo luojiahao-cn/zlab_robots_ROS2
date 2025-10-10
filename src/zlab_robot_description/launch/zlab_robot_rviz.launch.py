@@ -28,7 +28,9 @@ class ZlabRobotRvizLauncher:
         self.pkg_share = get_package_share_directory("zlab_robot_description")
         self.urdf_file = Path(self.pkg_share) / "urdf" / "zlab_robot.urdf.xacro"
         self.rviz_config_file = Path(self.pkg_share) / "config" / "view_robot.rviz"
-        self.default_config_file = Path(self.pkg_share) / "config" / "robot_config.yaml"
+        self.default_config_file = (
+            Path(self.pkg_share) / "config" / "robot_config_default.yaml"
+        )
 
     def get_launch_arguments(self) -> List[DeclareLaunchArgument]:
         """定义启动参数"""

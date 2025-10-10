@@ -1,23 +1,21 @@
-# zlab机器人启动配置
-# 与现有启动文件兼容的配置格式
+# 单机械臂配置
+# 只启用一个机械臂
 
-# 机械臂配置（兼容原有格式）
 arms:
   arm1:
-    arm_id: zlab_arm_left
-    prefix: l_
+    arm_id: zlab_arm
+    prefix: ""
     enabled: true
     dof: 6
     base_xyz: [0.0, 0.0, 0.0]
     base_rpy: [0.0, 0.0, 0.0]
-    # 物理属性
     payload_kg: 1.5
     reach_m: 0.8
-    
+
   arm2:
     arm_id: zlab_arm_right
     prefix: r_
-    enabled: true
+    enabled: false
     dof: 6
     base_xyz: [0.0, 0.8, 0.0]
     base_rpy: [0.0, 0.0, 0.0]
@@ -26,11 +24,9 @@ arms:
 
 # 关节限制配置
 joint_limits:
-  # 软限制比例（相对于硬限制）
   soft_limits_scale: 0.95
-  # 默认速度和加速度限制
-  default_velocity_limit: 1.57  # rad/s
-  default_acceleration_limit: 3.14  # rad/s²
+  default_velocity_limit: 1.57
+  default_acceleration_limit: 3.14
 
 # URDF生成参数
 urdf_generation:
