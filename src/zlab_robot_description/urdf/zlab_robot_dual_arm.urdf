@@ -366,6 +366,15 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+  <!-- End effector link for proper tool positioning -->
+  <link name="l_end_effector">
+    <!-- Empty link for end effector reference frame -->
+  </link>
+  <joint name="l_end_effector_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.07"/>
+    <parent link="l_j6_link"/>
+    <child link="l_end_effector"/>
+  </joint>
   <joint name="r_joint_base" type="fixed">
     <parent link="world"/>
     <child link="r_base0_link"/>
@@ -726,6 +735,15 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+  <!-- End effector link for proper tool positioning -->
+  <link name="r_end_effector">
+    <!-- Empty link for end effector reference frame -->
+  </link>
+  <joint name="r_end_effector_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.07"/>
+    <parent link="r_j6_link"/>
+    <child link="r_end_effector"/>
+  </joint>
   <gazebo>
     <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control"/>
   </gazebo>

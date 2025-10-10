@@ -366,6 +366,15 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+  <!-- End effector link for proper tool positioning -->
+  <link name="zlab_arm_end_effector">
+    <!-- Empty link for end effector reference frame -->
+  </link>
+  <joint name="zlab_arm_end_effector_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.07"/>
+    <parent link="zlab_arm_j6_link"/>
+    <child link="zlab_arm_end_effector"/>
+  </joint>
   <gazebo>
     <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control"/>
   </gazebo>
