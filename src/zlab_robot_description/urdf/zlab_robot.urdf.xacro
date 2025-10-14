@@ -114,9 +114,9 @@
     <xacro:macro name="zlab_robot_arm"
         params="arm_id:='zlab_arm' prefix:='' connected_to:='' base_xyz:='0 0 0' base_rpy:='0 0 0' dof:=6">
 
-        <xacro:property name="raw_prefix" value="${prefix if prefix != '' else arm_id}" />
+        <!-- 修改前缀逻辑：prefix为空则不加前缀 -->
         <xacro:property name="name_prefix"
-            value="${raw_prefix if raw_prefix != '' and raw_prefix.endswith('_') else (raw_prefix + '_' if raw_prefix != '' else '')}" />
+            value="${prefix if prefix != '' else ''}" />
 
         <xacro:unless value="${connected_to == ''}">
             <joint name="${name_prefix}joint_base" type="fixed">
@@ -332,7 +332,27 @@
                 k_velocity="10" />
         </joint>
         <xacro:gazebo-joint joint="${name_prefix}j6" />
+            
+        <!-- 末端虚拟链接 -->
+        <link name="${name_prefix}ee_link">
+            <inertial>
+                <mass value="0.01"/>
+                <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+            </inertial>
+        </link>
 
+        <joint name="${name_prefix}j6_to_ee" type="fixed">
+            <parent link="${name_prefix}j6_link" />
+            <child link="${name_prefix}ee_link" />
+            <origin xyz="0 0 0.1" rpy="0 0 0" />
+        </joint>
+
+        <!-- Gazebo 设置，防止关节合并 -->
+        <gazebo reference="${name_prefix}j6_to_ee">
+            <preserveFixedJoint>true</preserveFixedJoint>
+            <!-- For compatibility with SDFormat < 4.4 -->
+            <disableFixedJointLumping>true</disableFixedJointLumping>
+        </gazebo>
 
 
     </xacro:macro>

@@ -3,7 +3,7 @@
     双机械臂配置的 xacro 文件
     这是一个包装文件，引用主 xacro 并指定双臂配置
 -->
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="zlab_robot_dual_arm">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="dual_arm">
     
     <!-- 指定配置文件 -->
     <xacro:arg name="config_file" default="$(find zlab_robot_description)/config/robot_config_dual_arm.yaml" />
